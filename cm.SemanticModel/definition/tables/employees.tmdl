@@ -1,0 +1,92 @@
+table employees
+	lineageTag: 5a764cf2-acb4-4ef7-835b-25dfd171f92a
+
+	column employeeNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 990f1656-9e47-4e18-bf72-13f884feb725
+		summarizeBy: none
+		sourceColumn: employeeNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastName
+		dataType: string
+		lineageTag: d74c5b03-ba11-442d-8b5f-d07db02fd62c
+		summarizeBy: none
+		sourceColumn: lastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstName
+		dataType: string
+		lineageTag: 7edce273-31b9-44c2-8bac-cd785f4ea0b5
+		summarizeBy: none
+		sourceColumn: firstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column extension
+		dataType: string
+		lineageTag: 4c41a802-bf92-44e6-af4f-9665c1acb687
+		summarizeBy: none
+		sourceColumn: extension
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: aad2d803-7161-4887-ad65-b605dafcab7a
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column officeCode
+		dataType: int64
+		formatString: 0
+		lineageTag: b659871e-9c54-4d22-b8c4-2d6799102a04
+		summarizeBy: none
+		sourceColumn: officeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column reportsTo
+		dataType: int64
+		formatString: 0
+		lineageTag: c88b1b59-1f93-44ff-81c9-f3b2a20eb739
+		summarizeBy: sum
+		sourceColumn: reportsTo
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobTitle
+		dataType: string
+		lineageTag: b6b8d272-e1f4-4114-8e0a-a4be96009c67
+		summarizeBy: none
+		sourceColumn: jobTitle
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName = employees[firstName] &" "&employees[lastName]
+		lineageTag: 182102fa-4311-47ee-a7fa-e36d4a99bcbb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition employees = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\employees.csv"),[Delimiter=";", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"employeeNumber", Int64.Type}, {"lastName", type text}, {"firstName", type text}, {"extension", type text}, {"email", type text}, {"officeCode", Int64.Type}, {"reportsTo", Int64.Type}, {"jobTitle", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

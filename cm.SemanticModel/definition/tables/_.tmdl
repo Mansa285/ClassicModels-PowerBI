@@ -1,0 +1,189 @@
+table _
+	lineageTag: 68e40542-6039-4a22-99a8-412e86bc989c
+
+	column Date
+		formatString: General Date
+		lineageTag: b881f44a-06b6-495c-ac05-09d508dde8fb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 7ebecfad-ea17-414a-b3d0-ed371cd7c3cc
+			defaultHierarchy: LocalDateTable_40526ed6-ca10-4df4-85fa-a733a7156b92.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: bc3fd275-3bd5-4100-b4f5-0eabf152e627
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No'
+		formatString: 0
+		lineageTag: 331774c6-526a-4deb-944d-93dbde7d2645
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: a5c9b49a-9d17-45cc-b248-17ef010a5208
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short Month'
+		lineageTag: 049b38ab-30b0-43b4-b02a-aa5a9ce64d84
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Short Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 27e68b33-57fd-4a8a-b30e-480fcfba26ff
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Quarter
+		lineageTag: 41af4e4b-9d35-4bdb-9a85-3510bf5cce87
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year-Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		lineageTag: 89c087f5-950f-4a38-a8fe-f1f8a533c550
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year-Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month-Year
+		lineageTag: af777567-19d5-4ad9-a40c-16ac4774445b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month-Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: 02c586ee-2dab-43d3-891d-a7c40799cc25
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		lineageTag: acd43ed6-753d-4ee6-8caf-e5de046b9af3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short Day'
+		lineageTag: 1b9b948d-d0f9-4880-8229-f90f2eee85dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Short Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day No'
+		formatString: 0
+		lineageTag: 0047827a-1ba6-4001-ae2f-86480780b579
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Day No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week No'
+		formatString: 0
+		lineageTag: 5956ee2f-3f76-44ca-b94e-50301ef54191
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Week No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		formatString: General Date
+		lineageTag: b70add61-b6f6-4d96-ba3e-e1a8766b28ba
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Start of Month]
+
+		variation Variation
+			isDefault
+			relationship: 6ecd1f49-524d-423c-b6b6-0fac6a09763b
+			defaultHierarchy: LocalDateTable_c91d0156-4d15-41dc-834f-31365fd57580.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Month'
+		formatString: General Date
+		lineageTag: 35f7a187-3dbd-4bb4-9bd8-cfc4886b0d8a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [End of Month]
+
+		variation Variation
+			isDefault
+			relationship: a03cbb00-c0a3-4b44-8526-98024f7b00cf
+			defaultHierarchy: LocalDateTable_b0abde9b-a519-493c-860f-8f22d9f28710.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		lineageTag: 5e2d1f44-22d6-417e-b7dd-cf93ecd70a90
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Is Weekend]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _ = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS (
+				    CALENDAR ( MIN(orders[orderDate]), MAX(orders[orderDate]) ),
+				    "Year", YEAR ( [Date] ),
+				    "Month No", MONTH ( [Date] ),
+				    "Month", FORMAT ( [Date], "MMMM" ),
+				    "Short Month", FORMAT ( [Date], "MMM" ),
+				    "Quarter", "Q" & FORMAT ( [Date], "Q" ),
+				    "Year-Quarter", FORMAT ( [Date], "YYYY" ) & "-Q" & FORMAT ( [Date], "Q" ),
+				    "Year-Month", FORMAT ( [Date], "YYYY-MM" ),
+				    "Month-Year", FORMAT ( [Date], "MMM YYYY" ),
+				    "Day", DAY ( [Date] ),
+				    "Day Name", FORMAT ( [Date], "DDDD" ),
+				    "Short Day", FORMAT ( [Date], "DDD" ),
+				    "Day No", WEEKDAY ( [Date], 2 ),
+				    "Week No", WEEKNUM ( [Date], 2 ),
+				    "Start of Month", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ),
+				    "End of Month", EOMONTH ( [Date], 0 ),
+				    "Is Weekend",
+				        IF ( WEEKDAY ( [Date], 2 ) > 5, "Yes", "No" )
+				)
+
+	annotation PBI_Id = 60f311fb6ff341c0a64f87453aa0f6b3
+

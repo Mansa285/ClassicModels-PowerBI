@@ -1,0 +1,91 @@
+table Zero
+	lineageTag: c76b1807-a046-4ffe-90c6-e402a1c7ef95
+
+	measure 'Sales CY' = CALCULATE(SUM(orderdetails[sales]), orders[status]="Shipped")
+		displayFolder: Sales
+		lineageTag: f8d295e0-7ec3-49d4-af2b-60aea3057ec2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales PY' = CALCULATE([Sales CY], SAMEPERIODLASTYEAR('Calendar'[Date]))
+		displayFolder: Sales
+		lineageTag: ea0f4789-57cb-47b0-8367-7b1980ffc9fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Delta = [Sales CY]-[Sales PY]
+		displayFolder: Sales
+		lineageTag: 4020b135-7775-4db6-8891-4e1d22e17494
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Sales' = DIVIDE( [Sales CY]-[Sales PY],[Sales PY],0)
+		displayFolder: Sales
+		lineageTag: 207d0613-2029-42e9-896a-9d021b3189b4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'cy sales formatted' = ```
+			
+			VAR sales = [Sales CY] 
+			VAR result= 
+			SWITCH( TRUE(), 
+			    sales >= 10000000, 
+			    FORMAT( sales/10000000,"$ #,##0.00 cr"),
+			    sales >= 100000, 
+			    FORMAT( sales/100000,"$ #,##0.00 L"),
+			    sales >= 1000, 
+			    FORMAT( sales/1000,"$ #,##0.00 K"),
+			    FORMAT( sales, "$ #,##0.00")
+			    )
+			
+			RETURN result
+			```
+		displayFolder: Sales
+		lineageTag: d1bd72d4-bf67-4ce9-b71d-a13518afec3f
+
+	measure 'Sales Growth Formated' =
+			
+			if ([Delta] > 0, FORMAT([Growth Sales], "▲ #0.00 %"),
+			FORMAT([Growth Sales], "▼ #0.00 %"))
+		isHidden
+		displayFolder: Sales
+		lineageTag: ed26939b-99ac-4a5b-89ba-ef0785379c17
+
+		changedProperty = IsHidden
+
+	measure 'CY Quantity' = CALCULATE(SUM(orderdetails[quantityOrdered]), orders[status]="Shipped")
+		lineageTag: 476d27e8-b312-4958-bc43-a10adc819397
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure f_Sales140 = [Sales CY] * 0.4
+		lineageTag: 29e52035-1dd4-449e-b7d8-38765581ab26
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure YTD = CALCULATE([Sales CY], DATESYTD('Calendar'[Date]))
+		lineageTag: c8c82c54-4b53-4010-afe3-46eaff4576dd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Zero
+		dataType: int64
+		formatString: 0
+		lineageTag: e0534c15-02e7-47c1-ae2c-8737d8f491c7
+		summarizeBy: sum
+		sourceColumn: Zero
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Zero = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlCKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Zero = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Zero", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

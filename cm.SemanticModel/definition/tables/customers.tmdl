@@ -1,0 +1,144 @@
+table customers
+	lineageTag: 7fd3550d-d86d-4d19-9584-cddeacec06bd
+
+	column customerNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 63f60004-061d-4e0d-b79a-74099b06379c
+		summarizeBy: none
+		sourceColumn: customerNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerName
+		dataType: string
+		lineageTag: b95b16a2-e378-4d60-8b1d-3cb843daa3a2
+		summarizeBy: none
+		sourceColumn: customerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column contactLastName
+		dataType: string
+		lineageTag: c567abd0-e2a9-4f3b-b445-ec7eb7d37b99
+		summarizeBy: none
+		sourceColumn: contactLastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column contactFirstName
+		dataType: string
+		lineageTag: 2c2bb7a4-6073-4231-9422-28409101ca9f
+		summarizeBy: none
+		sourceColumn: contactFirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 0f79e7df-aa12-4011-aa09-3d7fb2bc8a33
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressLine1
+		dataType: string
+		lineageTag: 75a06e31-64c8-4e47-a3a2-22d75a3ab0b6
+		summarizeBy: none
+		sourceColumn: addressLine1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressLine2
+		dataType: string
+		lineageTag: cf1ce64b-717e-4ff6-93e0-b8b0d9212bee
+		summarizeBy: none
+		sourceColumn: addressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 4b4b216e-14e3-4dee-aeee-67c35d155240
+		summarizeBy: none
+		sourceColumn: city
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		isHidden
+		lineageTag: 8a74351f-f61b-4881-90db-fa4e15cc587c
+		summarizeBy: none
+		sourceColumn: state
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column postalCode
+		dataType: string
+		lineageTag: ba23a253-3f48-4081-b77f-e423636c96f3
+		summarizeBy: none
+		sourceColumn: postalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 4526da55-1c4c-4a27-a3a7-0642afd94c03
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesRepEmployeeNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 173b7e74-0129-472a-8055-2c4c18f001d8
+		summarizeBy: none
+		sourceColumn: salesRepEmployeeNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditLimit
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a24f675-c6c8-4351-868c-38bf79ff25d2
+		summarizeBy: sum
+		sourceColumn: creditLimit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Name len' = LEN(TRIM(customers[customerName]))
+		formatString: 0
+		lineageTag: 1430d660-13de-445d-aae7-0d3bbfa45756
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column NAMEinCAPITAL = UPPER(customers[customerName])
+		lineageTag: 4ea0ba2b-1fa4-47b2-8d45-01e6812f7787
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\customers.csv"),[Delimiter=";", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customerNumber", Int64.Type}, {"customerName", type text}, {"contactLastName", type text}, {"contactFirstName", type text}, {"phone", type text}, {"addressLine1", type text}, {"addressLine2", type text}, {"city", type text}, {"state", type text}, {"postalCode", type text}, {"country", type text}, {"salesRepEmployeeNumber", Int64.Type}, {"creditLimit", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

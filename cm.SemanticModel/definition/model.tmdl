@@ -1,0 +1,39 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["customers","employees","offices","orderdetails","orders","payments","productlines","products","Zero"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table customers
+ref table employees
+ref table offices
+ref table orderdetails
+ref table orders
+ref table DateTableTemplate_f3bfcd10-5c78-48a2-8e93-40913c4f004f
+ref table LocalDateTable_a4cee042-405d-4ed9-b5bd-9e4da36b0168
+ref table LocalDateTable_4346e21b-7aaa-495d-9821-fdb26a3eb396
+ref table payments
+ref table LocalDateTable_c03cd02d-34cf-4672-8b01-05df5adb44f3
+ref table productlines
+ref table products
+ref table _
+ref table Calendar
+ref table LocalDateTable_40526ed6-ca10-4df4-85fa-a733a7156b92
+ref table LocalDateTable_f436c5fc-bd63-4663-b04d-9aa99eec1593
+ref table LocalDateTable_c91d0156-4d15-41dc-834f-31365fd57580
+ref table LocalDateTable_53904d20-54dc-4a5a-8a35-c3a647a2c4c4
+ref table LocalDateTable_b0abde9b-a519-493c-860f-8f22d9f28710
+ref table LocalDateTable_26e03159-bba1-40c6-973e-15e6f4415649
+ref table Zero
+
+ref cultureInfo en-US
+

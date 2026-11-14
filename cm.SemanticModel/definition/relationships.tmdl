@@ -1,0 +1,79 @@
+relationship e26881ef-f0e9-40c2-b308-299165d1a849
+	joinOnDateBehavior: datePartOnly
+	fromColumn: orders.requiredDate
+	toColumn: LocalDateTable_a4cee042-405d-4ed9-b5bd-9e4da36b0168.Date
+
+relationship e9a7431f-1ab5-486e-800d-3c1e82c46815
+	joinOnDateBehavior: datePartOnly
+	fromColumn: orders.shippedDate
+	toColumn: LocalDateTable_4346e21b-7aaa-495d-9821-fdb26a3eb396.Date
+
+relationship d7bd53e7-ec78-4b1c-8e14-7f37e802f082
+	joinOnDateBehavior: datePartOnly
+	fromColumn: payments.paymentDate
+	toColumn: LocalDateTable_c03cd02d-34cf-4672-8b01-05df5adb44f3.Date
+
+relationship ad58d709-ada3-410e-abb3-18e268091e4e
+	fromColumn: employees.officeCode
+	toColumn: offices.officeCode
+
+relationship 849c50ff-259d-9f6f-cc72-02af700cdf68
+	fromColumn: customers.salesRepEmployeeNumber
+	toColumn: employees.employeeNumber
+
+relationship f4a50753-fb17-8e2b-7cd5-6ebd7180f7ed
+	fromColumn: orders.customerNumber
+	toColumn: customers.customerNumber
+
+relationship d9535964-c85c-2ca7-6cac-3e30ed3d2ba9
+	crossFilteringBehavior: bothDirections
+	fromColumn: orderdetails.orderNumber
+	toColumn: orders.orderNumber
+
+relationship 607e2927-9b89-f3d1-497a-938e52313f56
+	fromColumn: payments.customerNumber
+	toColumn: customers.customerNumber
+
+relationship 34727bb1-cf55-9db1-26c8-65bb4ddcc06a
+	crossFilteringBehavior: bothDirections
+	fromColumn: orderdetails.productCode
+	toColumn: products.productCode
+
+relationship AutoDetected_d9594856-9bbe-4a23-8cc6-65a6e8ddb291
+	fromColumn: products.productLine
+	toColumn: productlines.productLine
+
+relationship 7ebecfad-ea17-414a-b3d0-ed371cd7c3cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: _.Date
+	toColumn: LocalDateTable_40526ed6-ca10-4df4-85fa-a733a7156b92.Date
+
+relationship 7d407b85-5f5d-40ef-b500-f91a8eca1f05
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date
+	toColumn: LocalDateTable_f436c5fc-bd63-4663-b04d-9aa99eec1593.Date
+
+relationship c9183c41-d7e7-1684-692e-81c4f0c401d5
+	fromColumn: orders.orderDate
+	toColumn: Calendar.Date
+
+relationship 6ecd1f49-524d-423c-b6b6-0fac6a09763b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: _.'Start of Month'
+	toColumn: LocalDateTable_c91d0156-4d15-41dc-834f-31365fd57580.Date
+
+relationship 230583b4-5116-47fa-a9c0-a81efd839a8a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'Start of Month'
+	toColumn: LocalDateTable_53904d20-54dc-4a5a-8a35-c3a647a2c4c4.Date
+
+relationship a03cbb00-c0a3-4b44-8526-98024f7b00cf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: _.'End of Month'
+	toColumn: LocalDateTable_b0abde9b-a519-493c-860f-8f22d9f28710.Date
+
+relationship 48fa0cc4-e105-42db-b4d8-4033f8957cab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'End of Month'
+	toColumn: LocalDateTable_26e03159-bba1-40c6-973e-15e6f4415649.Date
+

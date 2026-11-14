@@ -1,0 +1,98 @@
+table products
+	lineageTag: ac15c441-7253-4d74-8b8d-3314e61ab46f
+
+	column productCode
+		dataType: string
+		lineageTag: 73135100-ccc0-4bbb-b924-26d4c8fbabdd
+		summarizeBy: none
+		sourceColumn: productCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column productName
+		dataType: string
+		lineageTag: a3b8790c-0381-40bf-8670-bb93845b4920
+		summarizeBy: none
+		sourceColumn: productName
+
+		annotation SummarizationSetBy = Automatic
+
+	column productLine
+		dataType: string
+		lineageTag: 414cda4a-0be0-4d9f-af6b-ce7d1853dc01
+		summarizeBy: none
+		sourceColumn: productLine
+
+		annotation SummarizationSetBy = Automatic
+
+	column productScale
+		dataType: string
+		lineageTag: a6f62fcf-6427-4eed-a0c1-34a223bc846b
+		summarizeBy: none
+		sourceColumn: productScale
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column productVendor
+		dataType: string
+		lineageTag: 0bf1bc21-e500-4d30-90c5-be964e8d2fbe
+		summarizeBy: none
+		sourceColumn: productVendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column productDescription
+		dataType: string
+		lineageTag: 4b693b6c-09e6-4cfd-a103-aa9fd14a4109
+		summarizeBy: none
+		sourceColumn: productDescription
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantityInStock
+		dataType: int64
+		formatString: 0
+		lineageTag: 02a15657-2333-424b-a24e-8dbbe0ddcb3f
+		summarizeBy: sum
+		sourceColumn: quantityInStock
+
+		annotation SummarizationSetBy = Automatic
+
+	column buyPrice
+		dataType: double
+		lineageTag: a8d2c939-4be7-408c-be2a-d1531c8685ac
+		summarizeBy: sum
+		sourceColumn: buyPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MSRP
+		dataType: double
+		lineageTag: 9c0aae7e-b3dd-4313-8ae7-0abbfc694d2e
+		summarizeBy: sum
+		sourceColumn: MSRP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition products = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\products.csv"),[Delimiter=";", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"productCode", type text}, {"productName", type text}, {"productLine", type text}, {"productScale", type text}, {"productVendor", type text}, {"productDescription", type text}, {"quantityInStock", Int64.Type}, {"buyPrice", type number}, {"MSRP", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

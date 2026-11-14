@@ -1,0 +1,60 @@
+table payments
+	lineageTag: a5e09a94-bb01-457e-82b6-16f9df9b7757
+
+	column customerNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 57ce1ab1-fabd-4ffd-9f44-f8a7f8e11cca
+		summarizeBy: none
+		sourceColumn: customerNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkNumber
+		dataType: string
+		lineageTag: b3b915f3-59a2-4a33-927a-068a8a9a7bef
+		summarizeBy: none
+		sourceColumn: checkNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column paymentDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0245759f-561d-46c0-b27c-3f08d10e76fa
+		summarizeBy: none
+		sourceColumn: paymentDate
+
+		variation Variation
+			isDefault
+			relationship: d7bd53e7-ec78-4b1c-8e14-7f37e802f082
+			defaultHierarchy: LocalDateTable_c03cd02d-34cf-4672-8b01-05df5adb44f3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column amount
+		dataType: double
+		lineageTag: 8ad9c538-4fec-4683-9567-e4a34d1aca0f
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition payments = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\payments.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customerNumber", Int64.Type}, {"checkNumber", type text}, {"paymentDate", type date}, {"amount", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

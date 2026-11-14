@@ -1,0 +1,168 @@
+table Calendar
+	lineageTag: 73732678-078b-4b78-b59c-2ce8819c9300
+
+	column Date
+		formatString: General Date
+		lineageTag: 717121dc-3297-4160-93c5-3ab28279faf9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Date]
+
+		variation Variation
+			isDefault
+			relationship: 7d407b85-5f5d-40ef-b500-f91a8eca1f05
+			defaultHierarchy: LocalDateTable_f436c5fc-bd63-4663-b04d-9aa99eec1593.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 755d75bd-764a-4410-bb63-784e8cac81f3
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: _[Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No'
+		formatString: 0
+		lineageTag: 8802c031-d65c-407d-be29-52d12bdca6ca
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: _[Month No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 687b588c-dff0-4b85-96c7-9959460e1ce5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short Month'
+		lineageTag: 379a65aa-e4d0-4b6e-b804-dfc6d390c622
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Short Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 5574ed4e-72b9-4327-97cb-a241ab8861b7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Quarter
+		lineageTag: cde06f02-0661-4cf7-a1ae-31e631f8ae0b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Year-Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		lineageTag: 6f933766-362d-4921-b1e7-348c6fc3da22
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Year-Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month-Year
+		lineageTag: e321604a-063f-4255-9ae5-8ba64e669dcb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Month-Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: 0dc96fe7-f993-4409-b393-0a2db81954bf
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: _[Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		lineageTag: af31610c-bdef-44bf-818e-37f976895cb4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Day Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short Day'
+		lineageTag: 60bed8a0-4484-45a2-8220-fa76b8b7c9ea
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Short Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day No'
+		formatString: 0
+		lineageTag: ae540650-2fe9-42e0-b876-91183fc44870
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: _[Day No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week No'
+		formatString: 0
+		lineageTag: b30f444a-5b5b-4b54-90c6-d9826c5b0455
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: _[Week No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		formatString: General Date
+		lineageTag: bea92372-6df7-46c7-a564-0e08770edd3b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Start of Month]
+
+		variation Variation
+			isDefault
+			relationship: 230583b4-5116-47fa-a9c0-a81efd839a8a
+			defaultHierarchy: LocalDateTable_53904d20-54dc-4a5a-8a35-c3a647a2c4c4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Month'
+		formatString: General Date
+		lineageTag: e6989026-fe88-4623-83e9-3a19ce7b12e6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[End of Month]
+
+		variation Variation
+			isDefault
+			relationship: 48fa0cc4-e105-42db-b4d8-4033f8957cab
+			defaultHierarchy: LocalDateTable_26e03159-bba1-40c6-973e-15e6f4415649.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		lineageTag: c728a43b-fd23-4850-a3fd-e62b9ba53db6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: _[Is Weekend]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source = _
+
+	annotation PBI_Id = 382b524f5ab64855b5371ab3208ce473
+

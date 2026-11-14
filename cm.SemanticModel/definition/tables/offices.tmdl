@@ -1,0 +1,96 @@
+table offices
+	lineageTag: 9fb1af60-878e-48f1-9db2-a0bed64a7828
+
+	column officeCode
+		dataType: int64
+		formatString: 0
+		lineageTag: fe2db111-246b-46dd-9ed5-71af308d0945
+		summarizeBy: none
+		sourceColumn: officeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 7bf956b6-9b76-4d32-8534-fbf3c269ebca
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: f7f4b313-a566-4dfc-9c7b-b2f49de3cf38
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressLine1
+		dataType: string
+		lineageTag: b32f54bb-0433-42e6-b4dd-8821af16959b
+		summarizeBy: none
+		sourceColumn: addressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressLine2
+		dataType: string
+		lineageTag: c1468d48-ad6f-4109-85b0-1cbeb70d78e5
+		summarizeBy: none
+		sourceColumn: addressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 86b05603-9778-4e5a-8425-c1cbde51ac40
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 8f0c71c2-a133-43a3-9fb7-1520aa716745
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column postalCode
+		dataType: string
+		lineageTag: beadb7f5-7538-4683-9492-2eee22925ab5
+		summarizeBy: none
+		sourceColumn: postalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column territory
+		dataType: string
+		lineageTag: c93caa23-c08e-4e50-8f11-0ab371c18513
+		summarizeBy: none
+		sourceColumn: territory
+
+		annotation SummarizationSetBy = Automatic
+
+	column address = COMBINEVALUES(",",offices[addressLine1],offices[addressLine2],offices[city],offices[state],offices[country])
+		lineageTag: f7764cfc-5007-40f3-ac39-d6ebe47ae6ec
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition offices = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\offices.csv"),[Delimiter=";", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"officeCode", Int64.Type}, {"city", type text}, {"phone", type text}, {"addressLine1", type text}, {"addressLine2", type text}, {"state", type text}, {"country", type text}, {"postalCode", type text}, {"territory", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

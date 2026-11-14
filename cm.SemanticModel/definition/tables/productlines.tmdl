@@ -1,0 +1,52 @@
+table productlines
+	lineageTag: e8e0fb08-b60d-49bf-89e7-99f0eb9f094f
+
+	column productLine
+		dataType: string
+		lineageTag: bc14caf3-4ff3-4518-9348-12b7df86b985
+		summarizeBy: none
+		sourceColumn: productLine
+
+		annotation SummarizationSetBy = Automatic
+
+	column textDescription
+		dataType: string
+		lineageTag: 698322ee-2d5e-4a5d-b874-88936456d61d
+		summarizeBy: none
+		sourceColumn: textDescription
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column htmlDescription
+		dataType: string
+		lineageTag: 34cb40e6-a0d5-4167-8d13-c874476b7c15
+		summarizeBy: none
+		sourceColumn: htmlDescription
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column image
+		dataType: string
+		lineageTag: 6fb19301-ecaf-4219-a6cc-97d261469943
+		summarizeBy: none
+		sourceColumn: image
+
+		annotation SummarizationSetBy = Automatic
+
+	partition productlines = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\class\PowerBI\Classicmodels\Data\productlines.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
