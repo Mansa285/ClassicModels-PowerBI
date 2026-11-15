@@ -73,6 +73,31 @@ table Zero
 		formatString: 0
 		lineageTag: 73a7974c-4bdb-4745-9dd0-e2a0ef3f050a
 
+	measure 'Sales per customers' = DIVIDE( SUM(orderdetails[sales]),[Active customers])
+		lineageTag: ac7b503c-d486-417e-80d2-a7ae16f40846
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Outstanding = ```
+			
+			 
+			 
+			 CALCULATE(SUM(orderdetails[sales]), FILTER(orders , orders[status] = "shipped")
+			
+			 )
+			
+			
+			-SUM(payments[amount]) 
+			```
+		lineageTag: f065fe4c-962b-4225-8860-0b4b07aa1f03
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Credit Utilization %' = DIVIDE([Outstanding], SUM(customers[creditLimit]))
+		lineageTag: 331a6836-b6ca-44e4-b345-af6aa14359a2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Zero
 		dataType: int64
 		formatString: 0
